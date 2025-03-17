@@ -1,2 +1,1 @@
-def hello() -> str:
-    return "Hello from matomo-core!"
+"""Library for working with Matomo."""
