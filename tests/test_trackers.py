@@ -1,10 +1,9 @@
 from typing import Any
 
 import pytest
+import shared
 
 from matomo_core.trackers import PerfMsTracker
-
-from . import shared
 
 
 def test_perf_ms_tracker_sync(snapshot_json) -> None:  # noqa: ANN001
