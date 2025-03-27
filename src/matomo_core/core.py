@@ -108,7 +108,7 @@ class MatomoCore:
         request_path: str,
         request_url: str,
         method: str,
-        remote_addr: str,
+        remote_addr: t.Optional[str],
         request_url_rule: str = "",
         referrer: t.Optional[str] = None,
         forwarded_for: t.Optional[str] = None,
@@ -155,7 +155,8 @@ class MatomoCore:
         if self.token_auth:
             ip_address = forwarded_for or remote_addr
             data["token_auth"] = self.token_auth
-            data["cip"] = ip_address
+            if ip_address:
+                data["cip"] = ip_address
 
         if lang:
             data["lang"] = lang
@@ -174,7 +175,7 @@ class MatomoCore:
         }
 
     @classmethod
-    def track_request_end(cls, status_code: str, tracking_state: MatomoTrackingState) -> None:
+    def track_request_end(cls, status_code: int, tracking_state: MatomoTrackingState) -> None:
         """Finish tracking.
 
         Args:
