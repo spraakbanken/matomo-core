@@ -7,6 +7,8 @@ import re
 import time
 import typing as t
 
+import typing_extensions as t_ext  # Needed for NotRequired for Python < 3.11
+
 import matomo_core.constants
 
 logger = logging.getLogger("flask_matomo2")
@@ -15,12 +17,13 @@ logger = logging.getLogger("flask_matomo2")
 DEFAULT_HTTP_TIMEOUT: int = 5
 
 
-class MatomoTrackingState(t.TypedDict):
+class MatomoTrackingState(t_ext.TypedDict):
     """Tracking state for Matomo."""
 
     tracking: bool
     start_ns: float
     tracking_data: dict[str, t.Any]
+    custom_tracking_data: t_ext.NotRequired[dict[str, t.Any]]
 
 
 class MatomoCore:
