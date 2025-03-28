@@ -168,9 +168,9 @@ class MatomoCore:
             data["urlref"] = referrer
 
         # Overwrite action_name, if it was configured with details()
-        configured_action_name = self.routes_details.get(action_name, {}).get("action_name")
-        if configured_action_name:
-            data["action_name"] = configured_action_name
+        if self.routes_details.get(action_name):
+            data.update(self.routes_details[action_name])
+
         return {
             "tracking": True,
             "start_ns": time.perf_counter_ns(),
