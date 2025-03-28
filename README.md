@@ -17,3 +17,17 @@
 [![CI(test)](https://github.com/spraakbanken/matomo-core/actions/workflows/test.yml/badge.svg)](https://github.com/spraakbanken/matomo-core/actions/workflows/test.yml)
 
 Library for working with Matomo.
+
+## MatomoCore
+
+Business logic for tracking backend calls with Matomo.
+
+Used by [flask-matomo2](https://github.com/spraakbanken/flask-matomo2) and [asgi-matomo](https://github.com/spraakbanken/asgi-matomo).
+
+## trackers
+
+Trackers to record time for different parts of a request.
+
+### PerfMsTracker
+
+A context manager for recording time in milliseconds.
