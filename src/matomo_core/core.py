@@ -33,15 +33,15 @@ class MatomoCore:
         self,
         *,
         matomo_url: str,
-        id_site: t.Optional[t.Union[str, int]] = None,
-        token_auth: t.Optional[str] = None,
-        base_url: t.Optional[str] = None,
-        ignored_routes: t.Optional[list[str]] = None,
-        routes_details: t.Optional[dict[str, dict[str, str]]] = None,
-        ignored_patterns: t.Optional[list[str]] = None,
-        ignored_ua_patterns: t.Optional[list[str]] = None,
-        allowed_methods: t.Union[list[str], t.Literal["all-methods"]] = "all-methods",
-        ignored_methods: t.Optional[list[str]] = None,
+        id_site: str | int | None = None,
+        token_auth: str | None = None,
+        base_url: str | None = None,
+        ignored_routes: list[str] | None = None,
+        routes_details: dict[str, dict[str, str]] | None = None,
+        ignored_patterns: list[str] | None = None,
+        ignored_ua_patterns: list[str] | None = None,
+        allowed_methods: list[str] | t.Literal["all-methods"] = "all-methods",
+        ignored_methods: list[str] | None = None,
     ) -> None:
         """Matamo tracker plugin.
 
@@ -111,11 +111,11 @@ class MatomoCore:
         request_path: str,
         request_url: str,
         method: str,
-        remote_addr: t.Optional[str],
+        remote_addr: str | None,
         request_url_rule: str = "",
-        referrer: t.Optional[str] = None,
-        forwarded_for: t.Optional[str] = None,
-        lang: t.Optional[str] = None,
+        referrer: str | None = None,
+        forwarded_for: str | None = None,
+        lang: str | None = None,
     ) -> MatomoTrackingState:
         """Build tracking state.
 
@@ -195,8 +195,8 @@ class MatomoCore:
 
     @classmethod
     def prepare_tracking_data_for_matomo(
-        cls, tracking_state: MatomoTrackingState, exc: t.Optional[BaseException] = None
-    ) -> t.Optional[dict[str, t.Any]]:
+        cls, tracking_state: MatomoTrackingState, exc: BaseException | None = None
+    ) -> dict[str, t.Any] | None:
         """Finish tracking and send to Matomo."""
         if not tracking_state["tracking"]:
             return None
