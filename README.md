@@ -3,7 +3,6 @@
 [![PyPI version](https://img.shields.io/pypi/v/matomo-core.svg)](https://pypi.org/project/matomo-core/)
 [![PyPI License](https://img.shields.io/pypi/l/matomo-core.svg)](https://pypi.org/project/matomo-core/)
 [![PyPI - Python Versions](https://img.shields.io/pypi/pyversions/matomo-core.svg)](https://pypi.org/project/matomo-core/)
-[![Docs](https://img.shields.io/badge/docs-readthedocs-red.svg?style=flat-square)](https://matomo-core.readthedocs.io)
 
 [![Maturity badge - level 3](https://img.shields.io/badge/Maturity-Level%203%20--%20Stable-green.svg)](https://github.com/spraakbanken/getting-started/blob/main/scorecard.md)
 [![Stage](https://img.shields.io/pypi/status/matomo-core.svg)](https://pypi.org/project/matomo-core/)
