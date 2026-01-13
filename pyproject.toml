@@ -8,7 +8,9 @@ authors = [
     { name = "Kristoffer Andersson", email = "kristoffer.andersson@gu.se" },
 ]
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "typing-extensions>=4.15.0",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
