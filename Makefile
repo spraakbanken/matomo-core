@@ -92,7 +92,7 @@ install-pre-commit: .git/hooks/pre-commit
 
 # setup production environment
 install:
-	uv sync --all-packages --no-dev
+	uv sync --all-packages --no-dev --frozen
 
 lock: uv.lock
 
