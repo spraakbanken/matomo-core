@@ -1,6 +1,6 @@
 [project]
 name = "matomo-core"
-version = "0.3.2"
+version = "0.3.3"
 description = "Sans-IO core for tracking with Matomo."
 readme = "README.md"
 requires-python = ">=3.10"
