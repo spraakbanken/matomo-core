@@ -21,6 +21,8 @@ class PerfMsTracker:
             key: the key to use to store this measurement.
         """
         self.start_ns = 0.0
+        if "tracking_data" not in scope:
+            scope["tracking_data"] = {}
         self.scope = scope
         self.key = key
 
