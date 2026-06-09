@@ -191,7 +191,10 @@ class MatomoCore:
         end_ns = time.perf_counter_ns()
         gt_ms = (end_ns - tracking_state["start_ns"]) / 1000
         tracking_state["tracking_data"]["gt_ms"] = gt_ms
-        tracking_state["tracking_data"]["cvar"]["http_status_code"] = status_code
+        try:
+            tracking_state["tracking_data"]["cvar"]["http_status_code"] = status_code
+        except TypeError as exc:
+            logger.error("Failed to set status_code ('%s') tracking_state=%s, exc=%s", status_code, tracking_state, exc)
 
     @classmethod
     def prepare_tracking_data_for_matomo(
