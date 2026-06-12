@@ -16,7 +16,7 @@ permissions:
 
 env:
   MINIMUM_PYTHON_VERSION: "3.10"
-  UV_VERSION: "0.9.1"
+  UV_VERSION: "0.11.7"
 
 jobs:
   coverage:
@@ -50,7 +50,7 @@ jobs:
           submodules: true
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@eac588ad8def6316056a12d4907a9d4d84ff7a3b # 7.3.0
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # 8.1.0
         with:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
@@ -68,7 +68,7 @@ jobs:
         run: make test-w-coverage
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           # directory: ./coverage
@@ -80,7 +80,9 @@ jobs:
           verbose: true
       - name: Install codescene coverage tool
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
-        run: curl https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh | bash -s -- -y
+        run: curl
+          https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh
+          | bash -s -- -y
       - name: Upload coverage data to CodeScene
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
         run: cs-coverage upload --format "lcov" --metric "line-coverage" coverage.lcov
@@ -110,7 +112,7 @@ jobs:
           submodules: true
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@eac588ad8def6316056a12d4907a9d4d84ff7a3b # 7.3.0
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # 8.1.0
         with:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
@@ -130,7 +132,7 @@ jobs:
         run: make doc-tests cov_report=xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           # directory: ./coverage
@@ -145,7 +147,9 @@ jobs:
           TESTTYPE: doctest
       - name: Install codescene coverage tool
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
-        run: curl https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh | bash -s -- -y
+        run: curl
+          https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh
+          | bash -s -- -y
       - name: Upload coverage data to CodeScene
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
         run: cs-coverage upload --format "lcov" --metric "line-coverage" coverage.lcov
@@ -169,7 +173,7 @@ jobs:
           submodules: true
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@eac588ad8def6316056a12d4907a9d4d84ff7a3b # 7.3.0
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # 8.1.0
         with:
           version: ${{ env.UV_VERSION }}
           enable-cache: true

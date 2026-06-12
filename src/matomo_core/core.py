@@ -1,5 +1,6 @@
 """The Flask middleware for Matomo tracking."""
 
+import copy
 import json
 import logging
 import random
@@ -11,7 +12,7 @@ import typing_extensions as t_ext  # Needed for NotRequired for Python < 3.11
 
 import matomo_core.constants
 
-logger = logging.getLogger("flask_matomo2")
+logger = logging.getLogger(__name__)
 
 
 DEFAULT_HTTP_TIMEOUT: int = 5
@@ -130,6 +131,7 @@ class MatomoCore:
             referrer: optional url that is set as referrer
             lang: optional setting of used languages
         """
+        logger.debug("Building tracking state")
         if not self.id_site:
             raise ValueError("id_site has to be set")
 
@@ -190,8 +192,12 @@ class MatomoCore:
 
         end_ns = time.perf_counter_ns()
         gt_ms = (end_ns - tracking_state["start_ns"]) / 1000
+        logger.debug("ending tracking request; gt_ms=%f, tracking_state=%s", gt_ms, tracking_state)
         tracking_state["tracking_data"]["gt_ms"] = gt_ms
-        tracking_state["tracking_data"]["cvar"]["http_status_code"] = status_code
+        try:
+            tracking_state["tracking_data"]["cvar"]["http_status_code"] = status_code
+        except TypeError as exc:
+            logger.error("Failed to set status_code ('%s') tracking_state=%s, exc=%s", status_code, tracking_state, exc)
 
     @classmethod
     def prepare_tracking_data_for_matomo(
@@ -200,8 +206,8 @@ class MatomoCore:
         """Finish tracking and send to Matomo."""
         if not tracking_state["tracking"]:
             return None
-        logger.debug("tracking_state=%s", tracking_state)
-        tracking_data = tracking_state["tracking_data"]
+        logger.debug("preparing tracking_data for matomo tracking_state=%s", tracking_state)
+        tracking_data = copy.deepcopy(tracking_state["tracking_data"])
         for key, value in tracking_state.get("custom_tracking_data", {}).items():
             if key == "cvar" and "cvar" in tracking_data:
                 tracking_data["cvar"].update(value)
@@ -215,4 +221,5 @@ class MatomoCore:
             cvar = tracking_data.pop("cvar")
             tracking_data["cvar"] = json.dumps(cvar)
 
+        logger.debug("prepared tracking_data for matomo tracking_data=%s", tracking_data)
         return tracking_data
