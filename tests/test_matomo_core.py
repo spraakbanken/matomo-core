@@ -1,16 +1,8 @@
 import pytest
-from syrupy import matchers
 from syrupy.assertion import SnapshotAssertion
 
 from matomo_core.core import MatomoCore
-
-
-def make_matcher():  # noqa: ANN201
-    return matchers.path_type({"gt_ms": (float,), "rand": (int,)})
-
-
-def make_state_matcher():  # noqa: ANN201
-    return matchers.path_type({"start_ns": (int,), "rand": (int,)})
+from tests import shared
 
 
 def test_empty_matomo_url_raise_value_error(snapshot) -> None:  # noqa: ANN001
@@ -45,7 +37,7 @@ def test_matomo_core_doesnt_track_ignored_path(snapshot_json) -> None:  # noqa: 
         request_url_rule="/ignored",
     )
     assert tracking_state["tracking"] is False
-    assert tracking_state == snapshot_json(matcher=make_state_matcher())
+    assert tracking_state == snapshot_json(matcher=shared.make_matcher(start_ns=(int,)))
 
 
 def test_matomo_core_lifecycle(snapshot_json: SnapshotAssertion) -> None:
@@ -63,4 +55,4 @@ def test_matomo_core_lifecycle(snapshot_json: SnapshotAssertion) -> None:
     MatomoCore.track_request_end(200, tracking_state=tracking_state)
     tracking_data = MatomoCore.prepare_tracking_data_for_matomo(tracking_state=tracking_state)
 
-    assert tracking_data == snapshot_json
+    assert tracking_data == snapshot_json(matcher=shared.make_matcher())
